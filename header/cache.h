@@ -13,12 +13,12 @@ class CacheElem
     private:
 
         PageT page_;
-        size_t freq_;
+        size_t freq_ = 0;
 
     public:
 
-        explicit CacheElem( PageT page );
-        explicit CacheElem();
+        CacheElem( PageT page );
+        CacheElem();
         ~CacheElem();
 
 };
@@ -38,7 +38,9 @@ class Cache
         explicit Cache( size_t size );
         ~Cache();
 
-        bool lookup_update( KeyT key, slow_get_page );
+
+        bool lookup_update( KeyT key, PageT( & )( KeyT key ) slow_get_page );
+        bool full() const;
 };
 
 
