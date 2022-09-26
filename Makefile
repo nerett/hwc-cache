@@ -39,7 +39,7 @@ main: libcache
 
 
 #----------------------------------libcache--------------------------------------------------
-libht_fdict:
+libcache:
 	$(CC) $(CFLAGS) $(SRCDIR)cache.cc -o $(BUILDDIR)libcache.o
 
 

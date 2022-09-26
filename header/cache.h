@@ -3,12 +3,14 @@
 
 
 #include <iostream>
+#include <list>
+#include <unordered_map>
 
 
 template <typename PageT>
 class CacheElem
 {
-    friend Cache;
+    //friend Cache;
 
     private:
 
@@ -39,7 +41,7 @@ class Cache
         ~Cache();
 
 
-        bool lookup_update( KeyT key, PageT( & )( KeyT key ) slow_get_page );
+        bool lookup_update( KeyT key, PageT( &slow_get_page )( KeyT key ) );
         bool full() const;
 };
 
