@@ -22,6 +22,7 @@ CC = g++ -std=c++20
 CFLAGS = -c $(DEBUGFLAGS) $(RELEASEFLAGS)
 LDFLAGS = $(DEBUGFLAGS)
 BUILDDIR = $(EXECDIR)
+SRCDIR = source/
 
 EXECNAME = hwc-cache
 
@@ -34,12 +35,12 @@ mkdir:
 	mkdir -p $(BUILDDIR) $(EXECDIR)
 	
 main: libcache
-	$(CC) $(CFLAGS) main.cpp -o $(BUILDDIR)main.o
+	$(CC) $(CFLAGS) $(SRCDIR)main.cc -o $(BUILDDIR)main.o
 
 
 #----------------------------------libcache--------------------------------------------------
 libht_fdict:
-	$(CC) $(CFLAGS) cache.cc -o $(BUILDDIR)libcache.o
+	$(CC) $(CFLAGS) $(SRCDIR)cache.cc -o $(BUILDDIR)libcache.o
 
 
 #----------------------------------INSTALLING DEPENDENCIES-----------------------------------
