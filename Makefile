@@ -3,11 +3,11 @@ RELEASEDIR = Release/
 
 
 ifeq ($(MODE), DEBUG)
-	DEBUGFLAGS = -Wall -Wextra -g -fsanitize=address
-	EXECDIR = $(RELEASEDIR)
+	DEBUGFLAGS = -Wall -Wextra -g #-fsanitize=address
+	EXECDIR = $(DEBUGDIR)
 else
 	RELEASEFLAGS = -D NDEBUG
-	EXECDIR = $(DEBUGDIR)
+	EXECDIR = $(RELEASEDIR)
 endif
 
 ifndef PACKAGEMANAGER
