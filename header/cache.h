@@ -1,5 +1,4 @@
-#ifndef CACHE_H_INCLUDED
-#define CACHE_H_INCLUDED
+#pragma once
 
 
 #include <iostream>
@@ -7,90 +6,46 @@
 #include <unordered_map>
 
 
-template <typename PageT>
+const size_t DEFAULT_CAPACITY = 20;
+
+
+template <typename PageT, typename KeyT>
 class CacheElem
 {
-    //friend Cache;
-
     public: //FIXME
 
         PageT page_;
+        KeyT key_;
+
         size_t freq_ = 0;
 
     public:
 
-        CacheElem( PageT page );
-        CacheElem();
-        ~CacheElem();
-
+        CacheElem( KeyT key, PageT page = {} ): page_( page ), key_( key ) {};
 };
+
 
 template <typename PageT, typename KeyT = int>
 class Cache
 {
     private:
 
-        size_t size_;
+        size_t capacity_;
+        //size_t size_ = 0;
 
-        std::list <CacheElem<PageT>> data_;
+        std::list <CacheElem<PageT, KeyT>> data_;
         using ListIt = typename std::list<PageT>::iterator;
-        //std::unordered_map <CacheElem<PageT>, KeyT> datatable_;
         std::unordered_map <KeyT, ListIt> datatable_;
 
     public:
 
-        explicit Cache( size_t size );
-        ~Cache();
+        explicit Cache( size_t capacity = DEFAULT_CAPACITY ): capacity_( capacity ) {};
 
         template <typename F>
         bool lookup_update( KeyT key, F slow_get_page ); //PageT( &slow_get_page )( KeyT key )
-        bool full() const;
+
+        bool full() const { return data_.size() >= capacity_; };
 };
-
-
-/*--------------------------FUNCTION-----------------------------------------*/
-template <typename PageT>
-CacheElem<PageT>::CacheElem( PageT page ):
-    page_( page )
-{
-
-}
-
-
-/*--------------------------FUNCTION-----------------------------------------*/
-template <typename PageT>
-CacheElem<PageT>::CacheElem():
-    page_()
-{
-
-}
-
-
-/*--------------------------FUNCTION-----------------------------------------*/
-template <typename PageT>
-CacheElem<PageT>::~CacheElem()
-{
-
-}
-
-
-/*--------------------------FUNCTION-----------------------------------------*/
-template <typename PageT, typename KeyT>
-Cache<PageT, KeyT>::Cache( size_t size ):
-    size_( size ),
-    data_( size ),
-    datatable_()
-{
-
-}
-
-
-/*--------------------------FUNCTION-----------------------------------------*/
-template <typename PageT, typename KeyT>
-Cache<PageT, KeyT>::~Cache()
-{
-
-}
 
 
 /*--------------------------FUNCTION-----------------------------------------*/
@@ -104,7 +59,8 @@ bool Cache<PageT, KeyT>::lookup_update( KeyT key, F slow_get_page )
     {
         if( full() )
         {
-            datatable_.erase( data_.back().id ); //FIXME
+            //datatable_.erase( data_.back().id );
+            datatable_.erase( data_.back().key_ ); //FIXME
             data_.pop_back(); //FIXME
         }
 
@@ -127,19 +83,3 @@ bool Cache<PageT, KeyT>::lookup_update( KeyT key, F slow_get_page )
 
     return true;
 }
-
-
-/*--------------------------FUNCTION-----------------------------------------*/
-template <typename PageT, typename KeyT> //не знаю, можно ли вынести реализаию этой функции в cache.cc
-bool Cache<PageT, KeyT>::full() const
-{
-    if( data_.size() >= size_ )
-    {
-        return true;
-    }
-
-    return false;
-}
-
-
-#endif //CACHE_H_INCLUDED
