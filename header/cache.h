@@ -1,10 +1,9 @@
 #pragma once
 
-
 #include <iostream>
+//#include <iterator>
 #include <list>
 #include <unordered_map>
-
 
 const size_t DEFAULT_CAPACITY = 20;
 
@@ -34,7 +33,7 @@ class Cache
         //size_t size_ = 0;
 
         std::list <CacheElem<PageT, KeyT>> data_;
-        using ListIt = typename std::list<PageT>::iterator;
+        using ListIt = typename std::list<CacheElem<PageT, KeyT>>::iterator;
         std::unordered_map <KeyT, ListIt> datatable_;
 
     public:
@@ -64,7 +63,7 @@ bool Cache<PageT, KeyT>::lookup_update( KeyT key, F slow_get_page )
             data_.pop_back(); //FIXME
         }
 
-        data_.push_front( slow_get_page( key ) );
+        data_.push_front( CacheElem<PageT, KeyT>( key, slow_get_page( key ) ) );
         datatable_[key] = data_.begin();
 
         return false;
@@ -76,10 +75,7 @@ bool Cache<PageT, KeyT>::lookup_update( KeyT key, F slow_get_page )
     data_.splice( data_.begin(), data_, eltit, std::next( eltit ) );
     */
 
-    //datatable_[key].freq_++;
-    ListIt test = data_.begin(); //test
-    ListIt iter = datatable_[key];
-    iter.freq_++;
+    datatable_[key]->freq_++;
 
     return true;
 }
