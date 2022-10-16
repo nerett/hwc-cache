@@ -2,6 +2,7 @@
 
 int slow_get_page( long long key )
 {
+    cout << "slow_get_page key = " << key << "\n";
     return 3;
 }
 
