@@ -44,6 +44,21 @@ class Cache
         bool lookup_update( KeyT key, F slow_get_page ); //PageT( &slow_get_page )( KeyT key )
 
         bool full() const { return data_.size() >= capacity_; };
+        ListIt lfu()
+        {
+            size_t least_freq = data_.begin()->freq_;
+            ListIt lf_elem = {};
+            for( ListIt i = data_.begin(); i != data_.end(); ++i )
+            {
+                if( i->freq_ < least_freq )
+                {
+                    least_freq = i->freq_;
+                    lf_elem = i;
+                }
+            }
+
+            return lf_elem;
+        }
 };
 
 
@@ -56,11 +71,16 @@ bool Cache<PageT, KeyT>::lookup_update( KeyT key, F slow_get_page )
 
     if( hit == datatable_.end() ) //page is not found
     {
+        std::cout << "size = " << data_.size() << " " << "capacity = " << capacity_ << "\n";
         if( full() )
         {
+            std::cout << "full!\n";
             //datatable_.erase( data_.back().id );
-            datatable_.erase( data_.back().key_ ); //FIXME
-            data_.pop_back(); //FIXME
+            //datatable_.erase( data_.back().key_ );
+            //data_.pop_back();
+
+            datatable_.erase( lfu()->key_ );
+            data_.erase( lfu() );
         }
 
         data_.push_front( CacheElem<PageT, KeyT>( key, slow_get_page( key ) ) );
@@ -79,3 +99,26 @@ bool Cache<PageT, KeyT>::lookup_update( KeyT key, F slow_get_page )
 
     return true;
 }
+
+
+/*--------------------------FUNCTION-----------------------------------------*/
+/*
+template <typename PageT, typename KeyT>
+//template <typename F>
+ListIt Cache<PageT, KeyT>::lfu() const
+{
+    size_t least_freq = data_.begin()->freq_;
+    ListIt lf_elem = {};
+    for( ListIt i = data_.begin(); i != data_.end(); ++i )
+    {
+        if( i->freq_ < least_freq )
+        {
+            least_freq = i->freq_;
+            lf_elem = i;
+       }
+    }
+
+    return lf_elem;
+}
+*/
+
