@@ -47,7 +47,7 @@ class Cache
         ListIt lfu()
         {
             size_t least_freq = data_.begin()->freq_;
-            ListIt lf_elem = {};
+            ListIt lf_elem = data_.begin(); // = {}; TO FIGURE OUT
             for( ListIt i = data_.begin(); i != data_.end(); ++i )
             {
                 if( i->freq_ < least_freq )
@@ -71,14 +71,15 @@ bool Cache<PageT, KeyT>::lookup_update( KeyT key, F slow_get_page )
 
     if( hit == datatable_.end() ) //page is not found
     {
-        std::cout << "size = " << data_.size() << " " << "capacity = " << capacity_ << "\n";
+        std::cerr << "size = " << data_.size() << " " << "capacity = " << capacity_ << "\n";
         if( full() )
         {
-            std::cout << "full!\n";
+            std::cerr << "full!\n";
             //datatable_.erase( data_.back().id );
             //datatable_.erase( data_.back().key_ );
             //data_.pop_back();
 
+            std::cerr << "lfu()->key_ = " << lfu()->key_ << "\n";
             datatable_.erase( lfu()->key_ );
             data_.erase( lfu() );
         }
