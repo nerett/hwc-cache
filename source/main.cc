@@ -1,8 +1,8 @@
-#include "../header/cache.h"
+#include "../header/cache.hh"
 
 int slow_get_page( long long key )
 {
-    cout << "slow_get_page key = " << key << "\n";
+    std::cout << "slow_get_page key = " << key << "\n";
     return 3;
 }
 
