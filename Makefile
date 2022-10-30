@@ -3,7 +3,7 @@ RELEASEDIR = Release/
 
 
 ifeq ($(MODE), DEBUG)
-	DEBUGFLAGS = -Wall -Wextra -g #-fsanitize=address
+	DEBUGFLAGS = -Wall -Wextra -g -fsanitize=address
 	EXECDIR = $(DEBUGDIR)
 else
 	RELEASEFLAGS = -D NDEBUG
