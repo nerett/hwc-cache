@@ -1,39 +1,30 @@
 #pragma once
 
 #include <iostream>
-//#include <iterator>
 #include <list>
 #include <unordered_map>
 
 const size_t DEFAULT_CAPACITY = 20;
 
-
-template <typename PageT, typename KeyT>
-class CacheElem
+template <typename PageT, typename KeyT = int>
+class Cache
 {
-    public: //FIXME
-
+    struct CacheElem
+    {
         PageT page_;
         KeyT key_;
 
         size_t freq_ = 0;
 
-    public:
-
         CacheElem( KeyT key, PageT page = {} ): page_( page ), key_( key ) {};
-};
+    };
 
-
-template <typename PageT, typename KeyT = int>
-class Cache
-{
     private:
 
         size_t capacity_;
-        //size_t size_ = 0;
 
-        std::list <CacheElem<PageT, KeyT>> data_;
-        using ListIt = typename std::list<CacheElem<PageT, KeyT>>::iterator;
+        std::list <Cache<PageT, KeyT>::CacheElem> data_;
+        using ListIt = typename std::list<Cache<PageT, KeyT>::CacheElem>::iterator;
         std::unordered_map <KeyT, ListIt> datatable_;
 
     public:
@@ -75,29 +66,19 @@ bool Cache<PageT, KeyT>::lookup_update( KeyT key, F slow_get_page )
         if( full() )
         {
             std::cerr << "full!\n";
-            //datatable_.erase( data_.back().id );
-            //datatable_.erase( data_.back().key_ );
-            //data_.pop_back();
-
             std::cerr << "lfu()->key_ = " << lfu()->key_ << "\n";
+        
             datatable_.erase( lfu()->key_ );
             data_.erase( lfu() );
         }
 
-        data_.push_front( CacheElem<PageT, KeyT>( key, slow_get_page( key ) ) );
+        data_.push_front( Cache<PageT, KeyT>::CacheElem( key, slow_get_page( key ) ) );
         datatable_[key] = data_.begin();
 
         return false;
     }
 
-    /*
-    auto eltit = hit->second;
-    if( eltit != data_.begin() )
-    data_.splice( data_.begin(), data_, eltit, std::next( eltit ) );
-    */
-
     datatable_[key]->freq_++;
-
     return true;
 }
 
