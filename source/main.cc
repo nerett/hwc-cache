@@ -1,28 +1,33 @@
 #include "../header/cache.hh"
+#include <vector>
 
 int slow_get_page( long long key )
 {
-    std::cout << "slow_get_page key = " << key << "\n";
-    return 3;
+    std::cerr << "slow_get_page key = " << key << "\n";
+    return 231;
 }
 
 int main()
 {
-    Cache <int, long long> test_cache( 3 );
+    size_t N_keys = 0, cachesize = 0;
+    std::cin >> cachesize;
+    std::cin >> N_keys;
 
-    test_cache.lookup_update( 100, slow_get_page ); //100
-    test_cache.lookup_update( 200, slow_get_page ); //200
-    test_cache.lookup_update( 300, slow_get_page ); //300
+    std::vector<long long> element_keys = {};
+    for( size_t i = 0; i < N_keys; i++ )
+    {
+        long long buffer = 0;
+        std::cin >> buffer;
+        element_keys.push_back( buffer );
+    }
 
-    test_cache.lookup_update( 100, slow_get_page ); //
-    test_cache.lookup_update( 200, slow_get_page ); //
-    test_cache.lookup_update( 400, slow_get_page ); //400 (300)
-    test_cache.lookup_update( 300, slow_get_page ); //300 (400)
-    test_cache.lookup_update( 400, slow_get_page ); //400 (300)
-    test_cache.lookup_update( 300, slow_get_page ); //300 (400)
-    test_cache.lookup_update( 300, slow_get_page ); //
-    test_cache.lookup_update( 400, slow_get_page ); //400 (100/200/300)
+    Cache <char, long long> cache( cachesize );
+    size_t N_hits = 0;
+    for( size_t i = 0; i < N_keys; i++ ) //FIXME
+    {
+        N_hits += cache.lookup_update( element_keys[i], slow_get_page );
+    }
 
-    Cache <int> test2_cache();
+    std::cout << N_hits << std::endl;
     return 0;
 }
