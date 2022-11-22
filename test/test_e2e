@@ -9,21 +9,21 @@ if [[ $# -lt 1 ]]; then
 fi
 
 exec_file=$1
-input_dir=./input
-expect_dir=./expect
-
+tests_dir=./test_data
 test_ctr=0
 error_ctr=0
 
-for file in `find ${input_dir} -type f`
+for input_file in `find ${tests_dir} -name "*.in" -type f`
 do
-    output=$({exec_file} < ${input_dir}/${file})
-    expect=$(cat ${expect_dir}/${file})
+    test=$(echo "${input_file}" | sed 's/.in//')
 
-    if [[ output == expect ]]; then
-        echo "Test #${test_ctr} '${file}' --- OK"
+    output=$(${exec_file} < ${test}.in 2> /dev/null)
+    expect=$(cat ${test}.exp)
+
+    if [[ output -eq expect ]]; then
+        echo "Test #${test_ctr} '${test}' --- OK"
     else
-        echo "Test #${test_ctr} '${file}' --- FAIL"
+        echo "Test #${test_ctr} '${test}' --- FAIL"
         echo "expected '${expect}', got '${output}'"
         echo ""
 
