@@ -65,7 +65,7 @@ rund:
 
 #----------------------------------TESTING---------------------------------------------------
 test_e2e:
-	./$(TESTSCRIPT) $(EXECDIR)/$(EXECNAME) $(TESTDATADIR)
+	./$(TESTSCRIPT) $(EXECDIR)$(EXECNAME) $(TESTDATADIR)
 
 #-----------------------------------CLEANING-------------------------------------------------
 clean:
