@@ -3,13 +3,14 @@
 #set -euo pipefail
 
 
-if [[ $# -lt 1 ]]; then
-    echo "Exec file must be specified!"
+if [[ $# -lt 2 ]]; then
+    echo "Usage:"
+    echo "test_e2e <path/to/exec_file> <path/to/test_data>"
     exit 1
 fi
 
 exec_file=$1
-tests_dir=./test_data
+tests_dir=$2 #./test_data
 test_ctr=0
 error_ctr=0
 

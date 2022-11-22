@@ -26,6 +26,9 @@ SRCDIR = source/
 
 EXECNAME = hwc-cache
 
+TESTSCRIPT= test/test_e2e
+TESTDATADIR= test/test_data/
+
 
 #----------------------------------BUILDING--------------------------------------------------
 all: mkdir main
@@ -60,6 +63,9 @@ run:
 rund:
 	valgrind --leak-check=full ./$(EXECDIR)$(EXECNAME)
 
+#----------------------------------TESTING---------------------------------------------------
+test_e2e:
+	./$(TESTSCRIPT) $(EXECDIR)/$(EXECNAME) $(TESTDATADIR)
 
 #-----------------------------------CLEANING-------------------------------------------------
 clean:
