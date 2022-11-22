@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#set -euo pipefail
-
+set -u
 
 if [[ $# -lt 2 ]]; then
     echo "Usage:"
