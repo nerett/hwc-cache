@@ -11,14 +11,18 @@ fi
 
 exec_file=$1
 tests_dir=$2 #./test_data
+logfile=test_e2e.log
 test_ctr=0
 error_ctr=0
+
+echo "Started end-to-end testing..." > ${logfile}
 
 for input_file in `find ${tests_dir} -name "*.in" -type f`
 do
     test=$(echo "${input_file}" | sed 's/.in//')
+    echo "[test_e2e] Error thread for test #${test_ctr} '${test}':" >> ${logfile}
 
-    output=$(${exec_file} < ${test}.in 2> /dev/null)
+    output=$(${exec_file} < ${test}.in 2>> ${logfile})
     expect=$(cat ${test}.exp)
 
     if [[ output -eq expect ]]; then
@@ -36,3 +40,4 @@ done
 
 echo "TOTAL:"
 echo "Conducted ${test_ctr} tests with ${error_ctr} errors."
+echo "See test_e2e.log for more."
