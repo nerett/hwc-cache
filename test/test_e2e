@@ -26,9 +26,9 @@ do
     expect=$(cat ${test}.exp)
 
     if [[ output -eq expect ]]; then
-        echo "Test #${test_ctr} '${test}' --- OK"
+        echo -e "Test #${test_ctr} '${test}' ---\033[32m OK \033[0m"
     else
-        echo "Test #${test_ctr} '${test}' --- FAIL"
+        echo -e "Test #${test_ctr} '${test}' --- \033[31m FAIL \033[0m"
         echo "expected '${expect}', got '${output}'"
         echo ""
 
@@ -38,6 +38,7 @@ do
     ((test_ctr++))
 done
 
-echo "TOTAL:"
+echo ""
+echo -e "\033[1mTOTAL:\033[0m"
 echo "Conducted ${test_ctr} tests with ${error_ctr} errors."
 echo "See test_e2e.log for more."
