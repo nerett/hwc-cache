@@ -18,7 +18,7 @@ echo "Started end-to-end testing..." > ${logfile}
 
 for input_file in `find ${tests_dir} -name "*.in" -type f | sort`
 do
-    test=$(echo "${input_file}" | sed 's/.in//')
+    test=$(echo "${input_file}" | sed 's/\.in//')
 
     echo "" >> ${logfile}
     echo "[test_e2e] Error thread for test #${test_ctr} '${test}':" >> ${logfile}
