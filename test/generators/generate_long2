@@ -1,0 +1,19 @@
+#!/bin/bash
+
+destfile=./test_data/long2.in
+
+echo "3 503002" > ${destfile}
+
+for (( i = 0; i < 1000; i++ )) do
+	echo -n "9914 " >> ${destfile}
+done
+
+for (( i = 0; i < 2000; i++ )) do
+	echo -n "314314314 " >> ${destfile}
+done
+
+for (( i = 0; i < 500000; i++ )) do
+	echo -n "99 " >> ${destfile}
+done
+
+echo -n "700 9914" >> ${destfile}

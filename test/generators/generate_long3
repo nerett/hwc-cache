@@ -1,0 +1,17 @@
+#!/bin/bash
+
+destfile=./test_data/long3.in
+
+echo "1000 900003" > ${destfile}
+
+for (( k = 0; k < 899; k++ )) do
+	echo -n "9236711 " >> ${destfile}
+done
+
+for (( i = 0; i < 999; i++ )) do
+	for (( k = 0; k < 900; k++ )) do
+		echo -n "${i} " >> ${destfile}
+	done
+done
+
+echo "3577123 9236711 3577123 3577123" >> ${destfile}
