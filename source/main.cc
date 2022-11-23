@@ -10,8 +10,7 @@ int slow_get_page( long long key )
 int main()
 {
     size_t N_keys = 0, cachesize = 0;
-    std::cin >> cachesize;
-    std::cin >> N_keys;
+    std::cin >> cachesize >> N_keys;
 
     std::vector<long long> element_keys = {};
     for( size_t i = 0; i < N_keys; i++ )
@@ -25,7 +24,10 @@ int main()
     size_t N_hits = 0;
     for( size_t i = 0; i < N_keys; i++ ) //FIXME
     {
-        N_hits += cache.lookup_update( element_keys[i], slow_get_page );
+        bool buffer = cache.lookup_update( element_keys[i], slow_get_page );
+        N_hits += buffer;
+
+        std::cerr << "Lookup result is " << buffer << " for element # " << element_keys[i] << std::endl;
     }
 
     std::cout << N_hits << std::endl;
