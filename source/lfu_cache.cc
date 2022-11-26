@@ -1,4 +1,4 @@
-#include "../header/cache.hh"
+#include "../header/lfu_cache.hh"
 #include <vector>
 
 int slow_get_page( long long key )

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-destfile=./test_data/long2.in
+destfile=./lfu_testdata/long2.in
 
 echo "3 503002" > ${destfile}
 
