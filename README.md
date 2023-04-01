@@ -54,17 +54,20 @@ make test-lfu
 ```
 
 *You'll see something like this:*
-[Example of end-to-end test output]()
+![example-e2etest](https://user-images.githubusercontent.com/89396128/229309895-9efe30c7-0a29-4753-9d8d-dc0b4c135ef0.png)
+
 
 Test pack for FLU cache is located in `test/lfu_testdata/`. There are 2 types of files: `*.in` for input data and `*.exp` for expected result. All of these files are scanned automatically on startup and added to the current test sequence.
 
 #### Rebuilding
 To totally rebuild the project run
 
-```bash
+```bash![Uploading Screenshot_20230401_213919.png…]()
+
 make clean
 make MODE=<modename>
-```
+```![Uploading Screenshot_20230401_213919.png…]()
+
 
 ## Dependencies
 This project actually depends on `libc` and building requires `make`, `g++` and `git` (it can also require `valgrind` installed to use `rund` target).
