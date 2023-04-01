@@ -53,7 +53,7 @@ There are built-in end-to-end test. You can run current test pack for LFU cache 
 make test-lfu
 ```
 
-*You'll see something like this:*
+##### You'll see something like this:
 ![example-e2etest](https://user-images.githubusercontent.com/89396128/229309895-9efe30c7-0a29-4753-9d8d-dc0b4c135ef0.png)
 
 
@@ -62,11 +62,10 @@ Test pack for FLU cache is located in `test/lfu_testdata/`. There are 2 types of
 #### Rebuilding
 To totally rebuild the project run
 
-```bash![Uploading Screenshot_20230401_213919.png…]()
-
+```bash
 make clean
 make MODE=<modename>
-```![Uploading Screenshot_20230401_213919.png…]()
+```
 
 
 ## Dependencies
